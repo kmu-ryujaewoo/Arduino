@@ -28,10 +28,9 @@
 #define _INTERVAL_SERIAL 100 //[2989] 시리얼 출력 INTERVAL 설정
 
 // PID parameters
-#define _KP 0
+#define _KP 1.2
 #define _KI 0
 #define _KD 0.1
-
 
 //calibrate sensor base value
 #define DIST_10C 130 //[2998] sample value for sensor 10cm dist value for calibrate
@@ -149,14 +148,17 @@ void loop() {
   
   if(event_serial) {
      event_serial = false;
-     Serial.print("Min:0,Low:200,dist:");
+     Serial.print("dist_ir:");
      Serial.print(dist_ema);
      Serial.print(",pterm:"); 
-     Serial.print(control);
+     Serial.print(map(pterm,-1000,1000,510,610));
+     Serial.print(",dterm:");
+     Serial.print(map(dterm,-1000,1000,510,610));
      Serial.print(",duty_target:");
-     Serial.print(duty_target);
+     Serial.print(map(duty_target,1000,2000,410,510));
      Serial.print(",duty_curr:");
-     Serial.print(duty_curr);
+     Serial.print(map(duty_curr,1000,2000,410,510));
+     Serial.print(", Min:100,Low:200,dist_target:255,High:310,Max:410");
      Serial.println();
              
   }
